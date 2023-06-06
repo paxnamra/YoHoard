@@ -1,11 +1,11 @@
 import './App.scss';
-import { Wrapper } from './Wrapper'
+import { Navigation } from './Navigation'
 
 function App() {
 
 
   return (
-    <Wrapper />
+    <Navigation />
   )
 
 }

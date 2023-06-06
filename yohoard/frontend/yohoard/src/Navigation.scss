@@ -1,0 +1,30 @@
+@use 'Colors' as *;
+
+.nav-box {
+	height: 100vh;
+	width: 20vw;
+	min-width: 70px;
+	max-width: 120px;
+	background-color: $nav-color;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+    overflow: hidden;
+
+	&__item {
+        transition: all .3s;
+
+		p {
+			font-size: 2rem;
+			color: white;
+            padding: 2rem 4rem;
+		}
+	}
+
+	&__item:hover {
+		background-color: $nav-item-hover;
+		cursor: pointer;
+	}
+}
+
