@@ -1,6 +1,8 @@
 import './Navigation.scss'
 
 export const Navigation = () => {
+    
+
 	return (
 		<div>
 			<div className='nav-box'>
