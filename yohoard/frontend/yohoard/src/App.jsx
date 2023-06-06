@@ -1,9 +1,12 @@
 import './App.scss';
+import { Wrapper } from './Wrapper'
 
 function App() {
 
 
-  return 
+  return (
+    <Wrapper />
+  )
 
 }
 
