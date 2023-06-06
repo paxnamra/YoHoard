@@ -5,16 +5,16 @@ export const Navigation = () => {
 		<div>
 			<div className='nav-box'>
 				<div className='nav-box__item'>
-					<p>1</p>
+					<p>✏️</p>
 				</div>
 				<div className='nav-box__item'>
-					<p>2</p>
+					<p>📌</p>
 				</div>
 				<div className='nav-box__item'>
-					<p>3</p>
+					<p>👤</p>
 				</div>
 				<div className='nav-box__item'>
-					<p>4</p>
+					<p>📞</p>
 				</div>
 			</div>
 		</div>
