@@ -1,0 +1,13 @@
+services:
+  mongodb:
+    image: mongo:6-jammy
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: yohoard
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb:/data/db
+volumes:
+  mongodb:
