@@ -35,8 +35,7 @@ public class NoteController {
   @DeleteMapping("/delete/{id}")
   public ResponseEntity<String> delete(@PathVariable("id") String id) {
     noteService.deleteNote(id);
-    return new ResponseEntity<>(id, HttpStatus.NO_CONTENT);
-    // Change response entity to return explicit info on what note was deleted
+    return new ResponseEntity<>("Successfully deleted a note.", HttpStatus.NO_CONTENT);
   }
 
   @PutMapping("/edit/{id}")
