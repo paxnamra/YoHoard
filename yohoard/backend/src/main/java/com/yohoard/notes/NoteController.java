@@ -20,25 +20,25 @@ public class NoteController {
   @Autowired
   private NoteService noteService;
 
-  @GetMapping("/list")
+  @GetMapping
   public ResponseEntity<List<Note>> listAll() {
     var allNotes = noteService.getAllNotes();
     return new ResponseEntity<>(allNotes, HttpStatus.OK);
   }
 
-  @PostMapping("/create")
+  @PostMapping
   public ResponseEntity<Note> create(@RequestBody Note note) {
     var newNote = noteService.createNote(note);
     return new ResponseEntity<>(newNote, HttpStatus.CREATED);
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable("id") String id) {
     noteService.deleteNote(id);
     return new ResponseEntity<>("Successfully deleted a note.", HttpStatus.NO_CONTENT);
   }
 
-  @PutMapping("/edit/{id}")
+  @PutMapping("/{id}")
   public ResponseEntity<Note> update(@PathVariable("id") String id, @RequestBody Note note) {
     var updatedNote = noteService.updateNote(id, note);
     return new ResponseEntity<>(updatedNote, HttpStatus.OK);

@@ -29,10 +29,10 @@ public class NoteService {
   }
 
   public void deleteNote(String id) {
-    Optional<Note> searchedNote = noteRepository.findById(id);
+    Optional<Note> existingNote = noteRepository.findById(id);
 
-    if (searchedNote.isPresent()) {
-      String noteId = searchedNote.get().getId();
+    if (existingNote.isPresent()) {
+      String noteId = existingNote.get().getId();
       noteRepository.deleteById(noteId);
       LOG.info("Successfully deleted note with id: {}", id);
     } else {
@@ -40,25 +40,25 @@ public class NoteService {
     }
   }
 
-  public Note updateNote(String noteId, Note dataToEdit) {
+  public Note updateNote(String noteId, Note editedNote) {
     Optional<Note> originalNote = noteRepository.findById(noteId);
 
     if (originalNote.isPresent()) {
-      Note newNote = originalNote.get();
-      newNote.setName(dataToEdit.getName());
-      newNote.setText(dataToEdit.getText());
-      newNote.setUpdatedAt(LocalDateTime.now());
-      newNote.setCategories(dataToEdit.getCategories());
-      newNote.setTags(dataToEdit.getTags());
-      newNote.setHighlights(dataToEdit.getHighlights());
-      newNote.setPriority(dataToEdit.getPriority());
+      Note note = originalNote.get();
+      note.setName(editedNote.getName());
+      note.setText(editedNote.getText());
+      note.setUpdatedAt(LocalDateTime.now());
+      note.setCategories(editedNote.getCategories());
+      note.setTags(editedNote.getTags());
+      note.setHighlights(editedNote.getHighlights());
+      note.setPriority(editedNote.getPriority());
 
-      noteRepository.save(newNote);
+      noteRepository.save(note);
       LOG.info("Successfully updated note with id: {}", noteId);
     } else {
       LOG.warn("Can't update note of given id: {}", noteId);
     }
 
-    return dataToEdit;
+    return editedNote;
   }
 }
