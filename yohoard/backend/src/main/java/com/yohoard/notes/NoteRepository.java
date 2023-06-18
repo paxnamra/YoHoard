@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NoteRepository extends MongoRepository<Note, String> {
-    long count();
+
 }
