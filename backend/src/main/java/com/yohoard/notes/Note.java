@@ -1,6 +1,7 @@
 package com.yohoard.notes;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -12,6 +13,7 @@ import java.util.List;
 @Document("notes")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Note {
     @Id()
     private String id;
@@ -23,7 +25,7 @@ public class Note {
     private List<Tag> tags;
     @DBRef
     private List<Highlight> highlights;
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private int priority;
 
