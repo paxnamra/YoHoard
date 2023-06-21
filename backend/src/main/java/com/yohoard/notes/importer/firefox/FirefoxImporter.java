@@ -1,18 +1,14 @@
 package com.yohoard.notes.importer.firefox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yohoard.notes.Category;
-import com.yohoard.notes.CategoryRepository;
-import com.yohoard.notes.Note;
-import com.yohoard.notes.NoteRepository;
+import com.yohoard.notes.*;
 import com.yohoard.notes.importer.Importer;
+import com.yohoard.util.DateTimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +17,17 @@ public class FirefoxImporter implements Importer {
     private static final int BOOKMARK_TYPE_CODE = 1;
     private static final int FOLDER_TYPE_CODE = 2;
 
-    private final NoteRepository noteRepository;
+    private final NoteService noteService;
     private final CategoryRepository categoryRepository;
+    private final TagService tagService;
 
-    public FirefoxImporter(NoteRepository noteRepository, CategoryRepository categoryRepository) {
-        this.noteRepository = noteRepository;
+    public FirefoxImporter(
+            NoteService noteService,
+            TagService tagService,
+            CategoryRepository categoryRepository
+    ) {
+        this.noteService = noteService;
+        this.tagService = tagService;
         this.categoryRepository = categoryRepository;
     }
 
@@ -41,17 +43,22 @@ public class FirefoxImporter implements Importer {
 
     private void importItems(BookmarkItem item, Category parentCategory) {
         if (item.typeCode() == BOOKMARK_TYPE_CODE) {
-            noteRepository.save(
+            List<Tag> tags = item.tags() != null
+                    ? tagService.getOrCreate(List.of(item.tags().split(",")))
+                    : new ArrayList<>();
+
+            noteService.createNote(
                     new Note(
                             item.title(),
                             item.uri(),
                             parentCategory == null ? new ArrayList<>() : List.of(parentCategory),
-                            new ArrayList<>(),
+                            tags,
                             new ArrayList<>(),
                             LocalDateTime.now(),
                             LocalDateTime.now(),
                             0
-                    ));
+                    )
+            );
 
             return;
         }
@@ -59,15 +66,15 @@ public class FirefoxImporter implements Importer {
         Category category = null;
 
         // only automatically generated folders have 'root' set
-        if (item.root() == null) {
+        if (item.typeCode() == FOLDER_TYPE_CODE && item.root() == null) {
             category = categoryRepository.save(
-                     new Category(
+                    new Category(
                             item.title(),
                             "",
-                            LocalDateTime.ofInstant(Instant.ofEpochMilli(item.dateAdded()), ZoneId.of("Europe/Warsaw")),
-                            LocalDateTime.ofInstant(Instant.ofEpochMilli(item.lastModified()), ZoneId.of("Europe/Warsaw")),
+                            DateTimeUtils.fromMicros(item.dateAdded()),
+                            DateTimeUtils.fromMicros(item.lastModified()),
                             0,
-                             parentCategory
+                            parentCategory
                     )
             );
         }
