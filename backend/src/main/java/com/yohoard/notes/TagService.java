@@ -2,7 +2,6 @@ package com.yohoard.notes;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,24 +15,22 @@ public class TagService {
         this.tagRepository = tagRepository;
     }
 
-    public List<Tag> getOrCreate(List<String> names) {
-        List<Tag> existingTags = tagRepository.findByNameIn(names);
+    public List<Tag> getOrCreate(Set<String> names) {
+        List<Tag> tags = tagRepository.findByNameIn(names);
 
-        Set<String> existingNames = existingTags.stream()
+        Set<String> existingNames = tags.stream()
                 .map(Tag::getName)
                 .collect(Collectors.toSet());
 
-        List<Tag> newTags = names.stream()
+        Set<Tag> newTags = names.stream()
                 .filter(name -> !existingNames.contains(name))
                 .map(name -> new Tag(name, "", 0))
-                .toList();
+                .collect(Collectors.toSet());
 
         tagRepository.saveAll(newTags);
 
-        List<Tag> allTags = new ArrayList<>(existingTags);
+        tags.addAll(newTags);
 
-        allTags.addAll(newTags);
-
-        return allTags;
+        return tags;
     }
 }

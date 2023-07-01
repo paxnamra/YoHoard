@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class FirefoxImporter implements Importer {
@@ -44,7 +45,7 @@ public class FirefoxImporter implements Importer {
     private void importItems(BookmarkItem item, Category parentCategory) {
         if (item.typeCode() == BOOKMARK_TYPE_CODE) {
             List<Tag> tags = item.tags() != null
-                    ? tagService.getOrCreate(List.of(item.tags().split(",")))
+                    ? tagService.getOrCreate(Set.of(item.tags().split(",")))
                     : new ArrayList<>();
 
             noteService.createNote(
