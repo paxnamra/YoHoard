@@ -1,0 +1,265 @@
+{
+  "guid": "root________",
+  "title": "",
+  "index": 0,
+  "dateAdded": 1687278736989000,
+  "lastModified": 1687278878611000,
+  "id": 1,
+  "typeCode": 2,
+  "type": "text/x-moz-place-container",
+  "root": "placesRoot",
+  "children": [
+    {
+      "guid": "menu________",
+      "title": "menu",
+      "index": 0,
+      "dateAdded": 1687278736989000,
+      "lastModified": 1687278737303000,
+      "id": 2,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "bookmarksMenuFolder",
+      "children": [
+        {
+          "guid": "kBfdw4OJ_M3y",
+          "title": "Mozilla Firefox",
+          "index": 0,
+          "dateAdded": 1687278737303000,
+          "lastModified": 1687278737303000,
+          "id": 7,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "g_ICI3kQ2yaZ",
+              "title": "Get Help",
+              "index": 0,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 8,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:https://support.mozilla.org/products/firefox",
+              "type": "text/x-moz-place",
+              "uri": "https://support.mozilla.org/products/firefox"
+            },
+            {
+              "guid": "SnD3I6FLI07a",
+              "title": "Customize Firefox",
+              "index": 1,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 9,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:https://support.mozilla.org/kb/customize-firefox-controls-buttons-and-toolbars?utm_source=firefox-browser&utm_medium=default-bookmarks&utm_campaign=customize",
+              "type": "text/x-moz-place",
+              "uri": "https://support.mozilla.org/kb/customize-firefox-controls-buttons-and-toolbars?utm_source=firefox-browser&utm_medium=default-bookmarks&utm_campaign=customize"
+            },
+            {
+              "guid": "fs816d3joTrm",
+              "title": "Get Involved",
+              "index": 2,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 10,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:https://www.mozilla.org/contribute/",
+              "type": "text/x-moz-place",
+              "uri": "https://www.mozilla.org/contribute/"
+            },
+            {
+              "guid": "k_LRsCRc2XLu",
+              "title": "About Us",
+              "index": 3,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 11,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:https://www.mozilla.org/about/",
+              "type": "text/x-moz-place",
+              "uri": "https://www.mozilla.org/about/"
+            }
+          ]
+        },
+        {
+          "guid": "rZvIfV2qzX2e",
+          "title": "Ubuntu and Free Software links",
+          "index": 1,
+          "dateAdded": 1687278737303000,
+          "lastModified": 1687278737303000,
+          "id": 12,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "I7VWZHy8rj8j",
+              "title": "Ubuntu",
+              "index": 0,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 13,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:http://www.ubuntu.com/",
+              "type": "text/x-moz-place",
+              "uri": "http://www.ubuntu.com/"
+            },
+            {
+              "guid": "umDwMxy_PiGh",
+              "title": "Ubuntu Wiki (community-edited website)",
+              "index": 1,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 14,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:http://wiki.ubuntu.com/",
+              "type": "text/x-moz-place",
+              "uri": "http://wiki.ubuntu.com/"
+            },
+            {
+              "guid": "Rk4xLyRYHV9N",
+              "title": "Make a Support Request to the Ubuntu Community",
+              "index": 2,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 15,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:https://answers.launchpad.net/ubuntu/+addquestion",
+              "type": "text/x-moz-place",
+              "uri": "https://answers.launchpad.net/ubuntu/+addquestion"
+            },
+            {
+              "guid": "CB-tWPLuyRzF",
+              "title": "Debian (Ubuntu is based on Debian)",
+              "index": 3,
+              "dateAdded": 1687278737303000,
+              "lastModified": 1687278737303000,
+              "id": 16,
+              "typeCode": 1,
+              "iconUri": "fake-favicon-uri:http://www.debian.org/",
+              "type": "text/x-moz-place",
+              "uri": "http://www.debian.org/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "guid": "toolbar_____",
+      "title": "toolbar",
+      "index": 1,
+      "dateAdded": 1687278736989000,
+      "lastModified": 1687278878611000,
+      "id": 3,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "toolbarFolder",
+      "children": [
+        {
+          "guid": "buKCdTfhl00-",
+          "title": "Getting Started",
+          "index": 0,
+          "dateAdded": 1687278737330000,
+          "lastModified": 1687278737330000,
+          "id": 17,
+          "typeCode": 1,
+          "tags": "default,firefox",
+          "iconUri": "fake-favicon-uri:https://www.mozilla.org/firefox/?utm_medium=firefox-desktop&utm_source=bookmarks-toolbar&utm_campaign=new-users&utm_content=-global",
+          "type": "text/x-moz-place",
+          "uri": "https://www.mozilla.org/firefox/?utm_medium=firefox-desktop&utm_source=bookmarks-toolbar&utm_campaign=new-users&utm_content=-global"
+        },
+        {
+          "guid": "L4qW3oADrDV5",
+          "title": "YouTube",
+          "index": 1,
+          "dateAdded": 1687278782171000,
+          "lastModified": 1687278782171000,
+          "id": 18,
+          "typeCode": 1,
+          "tags": "yt",
+          "iconUri": "https://www.youtube.com/s/desktop/7fca68b5/img/favicon_144x144.png",
+          "type": "text/x-moz-place",
+          "uri": "https://www.youtube.com/"
+        },
+        {
+          "guid": "UCUPNzhD7I_z",
+          "title": "New folder",
+          "index": 2,
+          "dateAdded": 1687278788302000,
+          "lastModified": 1687278878611000,
+          "id": 19,
+          "typeCode": 2,
+          "type": "text/x-moz-place-container",
+          "children": [
+            {
+              "guid": "yIutxE5LOdNw",
+              "title": "Allegro - atrakcyjne ceny - Strona Główna",
+              "index": 0,
+              "dateAdded": 1687278805325000,
+              "lastModified": 1687278805325000,
+              "id": 20,
+              "typeCode": 1,
+              "type": "text/x-moz-place",
+              "uri": "https://allegro.pl/"
+            },
+            {
+              "guid": "4CrmOCfa9yed",
+              "title": "Subfolder",
+              "index": 1,
+              "dateAdded": 1687278827730000,
+              "lastModified": 1687278878611000,
+              "id": 21,
+              "typeCode": 2,
+              "type": "text/x-moz-place-container",
+              "children": [
+                {
+                  "guid": "LQ9S-gp4ufro",
+                  "title": "Facebook - log in or sign up",
+                  "index": 0,
+                  "dateAdded": 1687278878611000,
+                  "lastModified": 1687278878611000,
+                  "id": 23,
+                  "typeCode": 1,
+                  "tags": "fb,facebook,meta",
+                  "iconUri": "https://static.xx.fbcdn.net/rsrc.php/yb/r/hLRJ1GG_y0J.ico",
+                  "type": "text/x-moz-place",
+                  "uri": "https://www.facebook.com/"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "guid": "zp6bukgJv1VD",
+          "title": "",
+          "index": 3,
+          "dateAdded": 1687278835077000,
+          "lastModified": 1687278839739000,
+          "id": 22,
+          "typeCode": 3,
+          "type": "text/x-moz-place-separator"
+        }
+      ]
+    },
+    {
+      "guid": "unfiled_____",
+      "title": "unfiled",
+      "index": 3,
+      "dateAdded": 1687278736989000,
+      "lastModified": 1687278737292000,
+      "id": 5,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "unfiledBookmarksFolder"
+    },
+    {
+      "guid": "mobile______",
+      "title": "mobile",
+      "index": 4,
+      "dateAdded": 1687278736997000,
+      "lastModified": 1687278737292000,
+      "id": 6,
+      "typeCode": 2,
+      "type": "text/x-moz-place-container",
+      "root": "mobileFolder"
+    }
+  ]
+}
