@@ -1,6 +1,7 @@
 package com.yohoard.notes;
 
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class CategoryService {
     var notes = noteRepository.findAllById(notesIds);
 
     if (category.isPresent()) {
-      category.get().getNotes().addAll(notes);
+      unwrapNotesList(category).addAll(notes);
       categoryRepository.save(category.get());
       LOG.info("Added notes to category of id: {} and name: {}. ",
           category.get().getId(),
@@ -79,7 +80,7 @@ public class CategoryService {
     var notes = noteRepository.findAllById(notesIds);
 
     if (category.isPresent()) {
-      category.get().getNotes().removeAll(notes);
+      unwrapNotesList(category).removeAll(notes);
       categoryRepository.save(category.get());
       LOG.info("Removed {} notes from category id: {} and name: {}. ",
           notesIds.size(),
@@ -88,18 +89,19 @@ public class CategoryService {
     }
   }
 
-  public Category moveNotes(String currentCategoryId, String anotherCategoryId, List<String> notesIds) {
+  public Category moveNotes(String currentCategoryId, String anotherCategoryId,
+      List<String> notesIds) {
     var current = categoryRepository.findById(currentCategoryId);
     var another = categoryRepository.findById(anotherCategoryId);
 
     if (current.isPresent() && another.isPresent()) {
-      var notes = current.get().getNotes();
-      var selectedNotes = notes.stream().filter(note -> notesIds.contains(note.getId())).toList();
+      var selectedNotes = unwrapNotesList(current).stream()
+          .filter(note -> notesIds.contains(note.getId())).toList();
 
-      another.get().getNotes().addAll(selectedNotes);
-      current.get().getNotes().removeAll(selectedNotes);
+      unwrapNotesList(another).addAll(selectedNotes);
+      unwrapNotesList(current).removeAll(selectedNotes);
       LOG.info("Moved {} notes from category id: {} and name: {} to category id: {} and name: {}. ",
-          notes.size(),
+          selectedNotes.size(),
           currentCategoryId,
           current.get().getName(),
           anotherCategoryId,
@@ -111,5 +113,10 @@ public class CategoryService {
     }
 
     return another.orElseThrow();
+  }
+
+  // should be always used inside conditional .isPresent() check
+  private List<Note> unwrapNotesList(Optional<Category> optionalValue) {
+    return optionalValue.get().getNotes();
   }
 }
