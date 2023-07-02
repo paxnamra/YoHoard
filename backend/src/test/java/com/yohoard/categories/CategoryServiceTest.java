@@ -1,10 +1,13 @@
-package com.yohoard.notes;
+package com.yohoard.categories;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.yohoard.categories.Category;
+import com.yohoard.categories.CategoryRepository;
+import com.yohoard.categories.CategoryService;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;

@@ -1,5 +1,6 @@
-package com.yohoard.notes;
+package com.yohoard.categories;
 
+import com.yohoard.notes.Note;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;

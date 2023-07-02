@@ -1,5 +1,7 @@
-package com.yohoard.notes;
+package com.yohoard.categories;
 
+import com.yohoard.notes.Note;
+import com.yohoard.notes.NoteRepository;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
