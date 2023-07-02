@@ -1,5 +1,7 @@
 package com.yohoard.notes;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class Category {
-    @Id()
+    @Id
     private String id;
     private String name;
     private String description;
@@ -21,6 +23,7 @@ public class Category {
     private LocalDateTime updatedAt;
     private int priority;
     private String path;
+    private List<Note> notes;
 
     public Category(String name, String description, LocalDateTime createdAt, LocalDateTime updatedAt, int priority, Category parent) {
         this.name = name;
@@ -29,6 +32,7 @@ public class Category {
         this.updatedAt = updatedAt;
         this.priority = priority;
         this.path = parent != null ? parent.getPath() + parent.getId() + "," : ",";
+        this.notes = new ArrayList<>();
     }
 
     public Category(String name, String description, int priority) {
