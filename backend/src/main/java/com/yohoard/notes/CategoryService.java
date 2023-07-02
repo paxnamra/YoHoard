@@ -88,14 +88,16 @@ public class CategoryService {
     }
   }
 
-  public Category moveNotes(String currentCategoryId, String anotherCategoryId) {
+  public Category moveNotes(String currentCategoryId, String anotherCategoryId, List<String> notesIds) {
     var current = categoryRepository.findById(currentCategoryId);
     var another = categoryRepository.findById(anotherCategoryId);
 
     if (current.isPresent() && another.isPresent()) {
       var notes = current.get().getNotes();
-      another.get().getNotes().addAll(notes);
-      current.get().getNotes().clear();
+      var selectedNotes = notes.stream().filter(note -> notesIds.contains(note.getId())).toList();
+
+      another.get().getNotes().addAll(selectedNotes);
+      current.get().getNotes().removeAll(selectedNotes);
       LOG.info("Moved {} notes from category id: {} and name: {} to category id: {} and name: {}. ",
           notes.size(),
           currentCategoryId,
