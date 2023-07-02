@@ -1,8 +1,8 @@
 package com.yohoard.notes.importer.firefox;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yohoard.notes.Category;
-import com.yohoard.notes.CategoryRepository;
+import com.yohoard.categories.Category;
+import com.yohoard.categories.CategoryRepository;
 import com.yohoard.notes.Note;
 import com.yohoard.notes.NoteRepository;
 import com.yohoard.notes.importer.Importer;

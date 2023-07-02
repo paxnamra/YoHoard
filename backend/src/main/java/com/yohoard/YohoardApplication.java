@@ -1,5 +1,7 @@
 package com.yohoard;
 
+import com.yohoard.categories.Category;
+import com.yohoard.categories.CategoryRepository;
 import com.yohoard.notes.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
