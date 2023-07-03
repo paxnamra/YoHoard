@@ -1,5 +1,6 @@
 package com.yohoard.categories;
 
+import static com.yohoard.TestDataUtil.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -10,9 +11,7 @@ import static org.mockito.Mockito.when;
 
 import com.yohoard.notes.Note;
 import com.yohoard.notes.NoteRepository;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -26,6 +25,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceTest {
+  private final List<String> TEST_NOTES_IDS = new ArrayList<>();
+  private final List<Note> TEST_NOTES = new ArrayList<>();
+  private final List<Category> TEST_CATEGORIES = new ArrayList<>();
+  private final Category TEST_CATEGORY = singleTestCategory("12345");
 
   @Mock
   private CategoryRepository categoryRepository;
@@ -36,42 +39,21 @@ class CategoryServiceTest {
   @InjectMocks
   private CategoryService service;
 
-  private final List<String> testNotesIds = new ArrayList<>();
-
-  private final List<Note> testNoteList = new ArrayList<>();
-  private final List<Category> testCategoryList = new ArrayList<>();
-
-  private final Category testCategory = new Category("cat1", "important stuff", 10);
-
   @BeforeEach
   public void init() {
-    testCategory.setId("12345");
-
-    testNotesIds.addAll(List.of("333", "4444"));
-
-    testNoteList.addAll(List.of(
-        new Note("note1", "some random text about cats", Collections.emptyList(),
-            Collections.emptyList(), Collections.emptyList(), LocalDateTime.now(),
-            LocalDateTime.now(), 8),
-        new Note("note2", "some random text about dogs", Collections.emptyList(),
-            Collections.emptyList(), Collections.emptyList(), LocalDateTime.now(),
-            LocalDateTime.now(), 3)
-    ));
-
-    testCategoryList.addAll(List.of(
-        new Category("cat1", "important stuff", 10),
-        new Category("cat2", "for later", 5),
-        new Category("cat3", "little things of no urgency", 1)));
+    TEST_NOTES_IDS.addAll(notesIds2Items());
+    TEST_NOTES.addAll(notes2Items());
+    TEST_CATEGORIES.addAll(categories3Items());
   }
 
   @AfterEach
   void clear() {
-    testCategoryList.clear();
+    TEST_CATEGORIES.clear();
   }
 
   @Test
   void getAllCategories_returnsCategoriesList() {
-    when(categoryRepository.findAll()).thenReturn(testCategoryList);
+    when(categoryRepository.findAll()).thenReturn(TEST_CATEGORIES);
 
     List<Category> result = service.getAllCategories();
 
@@ -81,18 +63,18 @@ class CategoryServiceTest {
 
   @Test
   void createCategory_returnsCreatedCategory() {
-    when(categoryRepository.save(testCategory)).thenReturn(testCategory);
+    when(categoryRepository.save(TEST_CATEGORY)).thenReturn(TEST_CATEGORY);
 
-    Category result = service.createCategory(testCategory);
+    Category result = service.createCategory(TEST_CATEGORY);
 
-    assertEquals(testCategory, result);
-    verify(categoryRepository, times(1)).save(testCategory);
+    assertEquals(TEST_CATEGORY, result);
+    verify(categoryRepository, times(1)).save(TEST_CATEGORY);
   }
 
   @Test
   void updateCategory_returnsUpdatedCategoryData() {
-    Category originalCategory = testCategory;
-    Category editedCategory = new Category("new awesome name", "new and shiny super awesome description", 7);
+    Category originalCategory = TEST_CATEGORY;
+    Category editedCategory = singleTestCategory();
 
     when(categoryRepository.findById(originalCategory.getId())).thenReturn(Optional.of(originalCategory));
     when(categoryRepository.save(originalCategory)).thenReturn(editedCategory);
@@ -110,9 +92,9 @@ class CategoryServiceTest {
 
   @Test
   void deleteCategory_deletesCategory_ifCategoryExists() {
-    Category category = testCategory;
+    Category category = TEST_CATEGORY;
 
-    when(categoryRepository.findById(testCategory.getId())).thenReturn(Optional.of(testCategory));
+    when(categoryRepository.findById(TEST_CATEGORY.getId())).thenReturn(Optional.of(TEST_CATEGORY));
 
     service.deleteCategory(category);
 
@@ -122,21 +104,21 @@ class CategoryServiceTest {
 
   @Test
   void deleteCategory_willNotDeleteCategory_ifCategoryNotExists() {
-    Category category = testCategory;
+    Category category = TEST_CATEGORY;
 
-    when(categoryRepository.findById(testCategory.getId())).thenReturn(Optional.empty());
+    when(categoryRepository.findById(TEST_CATEGORY.getId())).thenReturn(Optional.empty());
 
     service.deleteCategory(category);
 
-    verify(categoryRepository, times(1)).findById(testCategory.getId());
+    verify(categoryRepository, times(1)).findById(TEST_CATEGORY.getId());
     verify(categoryRepository, never()).delete(category);
   }
 
   @Test
   void addNotes_addsNotesToCategory_ifCategoryExists() {
-    List<String> notesIds = testNotesIds;
-    Category category = testCategory;
-    List<Note> notes = testNoteList;
+    List<String> notesIds = TEST_NOTES_IDS;
+    Category category = TEST_CATEGORY;
+    List<Note> notes = TEST_NOTES;
 
     when(categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
     when(noteRepository.findAllById(notesIds)).thenReturn(notes);
@@ -153,7 +135,7 @@ class CategoryServiceTest {
   @Test
   void addNotes_throwsException_ifCategoryNotExists() {
     String categoryId = "this id doesn't exist";
-    List<String> notesIds = testNotesIds;
+    List<String> notesIds = TEST_NOTES_IDS;
 
     when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
