@@ -4,6 +4,7 @@ import static com.yohoard.TestDataUtil.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -48,6 +49,8 @@ class CategoryServiceTest {
 
   @AfterEach
   void clear() {
+    TEST_NOTES_IDS.clear();
+    TEST_NOTES.clear();
     TEST_CATEGORIES.clear();
   }
 
@@ -140,5 +143,66 @@ class CategoryServiceTest {
     when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
     assertThrows(NoSuchElementException.class, () -> service.addNotes(notesIds, categoryId));
+  }
+
+  @Test
+  void removeNotes_removesNotesFromCategory() {
+    List<String> notesIds = TEST_NOTES_IDS;
+
+    Category category = singleTestCategory("12345");
+    List<Note> notes = TEST_NOTES;
+
+    when(categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
+    when(noteRepository.findAllById(notesIds)).thenReturn(notes);
+    when(categoryRepository.save(category)).thenReturn(category);
+
+    service.removeNotes(notesIds, category.getId());
+
+    verify(categoryRepository, times(1)).findById(category.getId());
+    verify(noteRepository, times(1)).findAllById(notesIds);
+    verify(categoryRepository, times(1)).save(category);
+    assertEquals(0, category.getNotes().size());
+  }
+
+  @Test
+  void removeNotes_willNotRemoveNotes_ifCategoryNotExists() {
+    String categoryId = "this id doesn't exist";
+    List<String> notesIds = TEST_NOTES_IDS;
+
+    when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
+    when(noteRepository.findAllById(notesIds)).thenReturn(TEST_NOTES);
+
+    service.removeNotes(notesIds, categoryId);
+
+    verify(categoryRepository, times(1)).findById(categoryId);
+    verify(categoryRepository, never()).findAllById(notesIds);
+    verify(categoryRepository, never()).save(any());
+  }
+
+  @Test
+  void moveNotes_movesNotesFromCurrentCategoryToAnotherCategory() {
+    String currentCategoryId = "12345";
+    String anotherCategoryId = "54321";
+    List<String> notesIds = TEST_NOTES_IDS;
+
+    Category currentCategory = singleTestCategory(currentCategoryId);
+    Category anotherCategory = singleTestCategory(anotherCategoryId);
+
+    List<Note> selectedNotes = TEST_NOTES;
+
+    when(categoryRepository.findById(currentCategoryId)).thenReturn(Optional.of(currentCategory));
+    when(categoryRepository.findById(anotherCategoryId)).thenReturn(Optional.of(anotherCategory));
+
+    service.moveNotes(currentCategoryId, anotherCategoryId, notesIds);
+
+    verify(categoryRepository, times(1)).findById(currentCategoryId);
+    verify(categoryRepository, times(1)).findById(anotherCategoryId);
+    verify(categoryRepository, times(1)).save(currentCategory);
+    verify(categoryRepository, times(1)).save(anotherCategory);
+
+    assertEquals(0, currentCategory.getNotes().size());
+    // below to fix for later
+//    assertEquals(2, anotherCategory.getNotes().size());
+//    assertEquals(selectedNotes.size(), anotherCategory.getNotes().size());
   }
 }

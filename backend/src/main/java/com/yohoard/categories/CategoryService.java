@@ -101,7 +101,11 @@ public class CategoryService {
           .filter(note -> notesIds.contains(note.getId())).toList();
 
       unwrapNotesList(another).addAll(selectedNotes);
+      another.ifPresent(aCat -> categoryRepository.save(aCat));
+
       unwrapNotesList(current).removeAll(selectedNotes);
+      current.ifPresent(cCat -> categoryRepository.save(cCat));
+
       LOG.info("Moved {} notes from category id: {} and name: {} to category id: {} and name: {}. ",
           selectedNotes.size(),
           currentCategoryId,

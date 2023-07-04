@@ -38,10 +38,12 @@ public class Category {
 
     public Category(String name, String description, int priority) {
         this(name, description, LocalDateTime.now(), LocalDateTime.now(), priority, null);
+        this.notes = new ArrayList<>();
     }
 
     public Category(String name, String description, int priority, Category parent) {
         this(name, description, LocalDateTime.now(), LocalDateTime.now(), priority, parent);
+        this.notes = new ArrayList<>();
         this.path = parent.getPath() + parent.getId() + ",";
     }
 }

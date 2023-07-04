@@ -26,14 +26,18 @@ public class TestDataUtil {
   }
 
   public static List<Note> notes2Items() {
-    return List.of(
-        new Note("note1", "some random text about cats", Collections.emptyList(),
-            Collections.emptyList(), Collections.emptyList(), LocalDateTime.now(),
-            LocalDateTime.now(), 8),
-        new Note("note2", "some random text about dogs", Collections.emptyList(),
-            Collections.emptyList(), Collections.emptyList(), LocalDateTime.now(),
-            LocalDateTime.now(), 3)
-    );
+    Note note1 = new Note("note1", "some random text about cats", Collections.emptyList(),
+        Collections.emptyList(), Collections.emptyList(), LocalDateTime.now(),
+        LocalDateTime.now(), 8);
+
+    Note note2 = new Note("note2", "some random text about dogs", Collections.emptyList(),
+        Collections.emptyList(), Collections.emptyList(), LocalDateTime.now(),
+        LocalDateTime.now(), 3);
+
+    note1.setId("333");
+    note2.setId("4444");
+
+    return List.of(note1, note2);
   }
 
   public static List<Category> categories3Items() {
