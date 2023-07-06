@@ -1,8 +1,12 @@
 package com.yohoard.categories;
 
-import static com.yohoard.TestDataUtil.*;
+import static com.yohoard.TestDataUtil.categories3Items;
+import static com.yohoard.TestDataUtil.notesIds2Items;
+import static com.yohoard.TestDataUtil.notesWith5Items;
+import static com.yohoard.TestDataUtil.singleTestCategory;
+import static com.yohoard.TestDataUtil.singleTestCategoryWithNotes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
@@ -13,6 +17,7 @@ import static org.mockito.Mockito.when;
 import com.yohoard.notes.Note;
 import com.yohoard.notes.NoteRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -43,7 +48,7 @@ class CategoryServiceTest {
   @BeforeEach
   public void init() {
     TEST_NOTES_IDS.addAll(notesIds2Items());
-    TEST_NOTES.addAll(notes2Items());
+    TEST_NOTES.addAll(notesWith5Items());
     TEST_CATEGORIES.addAll(categories3Items());
   }
 
@@ -84,7 +89,6 @@ class CategoryServiceTest {
 
     Category result = service.updateCategory(originalCategory.getId(), editedCategory);
 
-    assertNotNull(result);
     assertEquals(editedCategory, result);
     assertEquals("new awesome name", result.getName());
     assertEquals("new and shiny super awesome description", result.getDescription());
@@ -150,10 +154,9 @@ class CategoryServiceTest {
     List<String> notesIds = TEST_NOTES_IDS;
 
     Category category = singleTestCategory("12345");
-    List<Note> notes = TEST_NOTES;
 
     when(categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
-    when(noteRepository.findAllById(notesIds)).thenReturn(notes);
+    when(noteRepository.findAllById(notesIds)).thenReturn(TEST_NOTES);
     when(categoryRepository.save(category)).thenReturn(category);
 
     service.removeNotes(notesIds, category.getId());
@@ -183,26 +186,35 @@ class CategoryServiceTest {
   void moveNotes_movesNotesFromCurrentCategoryToAnotherCategory() {
     String currentCategoryId = "12345";
     String anotherCategoryId = "54321";
-    List<String> notesIds = TEST_NOTES_IDS;
+    List<Note> selectedNotes = Arrays.asList(TEST_NOTES.get(0), TEST_NOTES.get(1));
 
-    Category currentCategory = singleTestCategory(currentCategoryId);
+    Category currentCategory = singleTestCategoryWithNotes(currentCategoryId);
     Category anotherCategory = singleTestCategory(anotherCategoryId);
-
-    List<Note> selectedNotes = TEST_NOTES;
 
     when(categoryRepository.findById(currentCategoryId)).thenReturn(Optional.of(currentCategory));
     when(categoryRepository.findById(anotherCategoryId)).thenReturn(Optional.of(anotherCategory));
 
-    service.moveNotes(currentCategoryId, anotherCategoryId, notesIds);
+    service.moveNotes(currentCategoryId, anotherCategoryId, TEST_NOTES_IDS);
 
     verify(categoryRepository, times(1)).findById(currentCategoryId);
     verify(categoryRepository, times(1)).findById(anotherCategoryId);
     verify(categoryRepository, times(1)).save(currentCategory);
     verify(categoryRepository, times(1)).save(anotherCategory);
 
-    assertEquals(0, currentCategory.getNotes().size());
-    // below to fix for later
-//    assertEquals(2, anotherCategory.getNotes().size());
-//    assertEquals(selectedNotes.size(), anotherCategory.getNotes().size());
+    assertEquals(3, currentCategory.getNotes().size());
+    assertEquals(2, anotherCategory.getNotes().size());
+    assertFalse(currentCategory.getNotes().containsAll(selectedNotes));
+  }
+
+  @Test
+  void moveNotes_throwsException_ifCurrentOrAnotherCategoryNotExists() {
+    String currentCategoryId = "12345";
+    String anotherCategoryId = "54321";
+    List<String> notesIds = TEST_NOTES_IDS;
+
+    when(categoryRepository.findById(currentCategoryId)).thenReturn(Optional.empty());
+    when(categoryRepository.findById(anotherCategoryId)).thenReturn(Optional.empty());
+
+    assertThrows(NoSuchElementException.class, () -> service.moveNotes(currentCategoryId, anotherCategoryId, notesIds));
   }
 }
