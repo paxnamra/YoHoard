@@ -51,8 +51,8 @@ public class CategoryService {
     return editedCategory;
   }
 
-  public void deleteCategory(Category category) {
-    var categoryToDelete = categoryRepository.findById(category.getId());
+  public void deleteCategory(String categoryId) {
+    var categoryToDelete = categoryRepository.findById(categoryId);
 
     if (categoryToDelete.isPresent()) {
       categoryToDelete.ifPresent(ctd -> categoryRepository.delete(ctd));

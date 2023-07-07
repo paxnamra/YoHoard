@@ -103,7 +103,7 @@ class CategoryServiceTest {
 
     when(categoryRepository.findById(TEST_CATEGORY.getId())).thenReturn(Optional.of(TEST_CATEGORY));
 
-    service.deleteCategory(category);
+    service.deleteCategory(category.getId());
 
     verify(categoryRepository, times(1)).findById(category.getId());
     verify(categoryRepository, times(1)).delete(category);
@@ -115,7 +115,7 @@ class CategoryServiceTest {
 
     when(categoryRepository.findById(TEST_CATEGORY.getId())).thenReturn(Optional.empty());
 
-    service.deleteCategory(category);
+    service.deleteCategory(category.getId());
 
     verify(categoryRepository, times(1)).findById(TEST_CATEGORY.getId());
     verify(categoryRepository, never()).delete(category);
