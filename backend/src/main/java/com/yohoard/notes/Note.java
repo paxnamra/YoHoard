@@ -1,5 +1,6 @@
 package com.yohoard.notes;
 
+import com.yohoard.categories.Category;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

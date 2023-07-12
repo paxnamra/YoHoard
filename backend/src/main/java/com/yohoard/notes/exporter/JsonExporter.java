@@ -1,6 +1,6 @@
 package com.yohoard.notes.exporter;
 
-import com.yohoard.notes.Category;
+import com.yohoard.categories.Category;
 import com.yohoard.notes.Note;
 
 public class JsonExporter {
